@@ -1,0 +1,196 @@
+<Attributes
+  xmlns="urn:mace:shibboleth:2.0:attribute-map"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!--
+    This is a stripped down attribute-map for Stanford Shibboleth SPs.
+    Extra attribute mappings can be added for additional attributes.
+
+    Some attributes have multiple mappings, because IdPs can release
+    well-known attributes using either the OID or name.
+  -->
+    
+  <!--
+    eppn aka eduPersonPrincipalName
+    
+    A username with a scope (domain); for Stanford people it is
+    SUNetID@stanford.edu
+  -->
+  <Attribute
+    name="urn:mace:dir:attribute-def:eduPersonPrincipalName"
+    id="eppn">
+    <AttributeDecoder
+      xsi:type="ScopedAttributeDecoder"/>
+  </Attribute>
+  <Attribute
+    name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6"
+    id="eppn">
+    <AttributeDecoder
+      xsi:type="ScopedAttributeDecoder"/>
+  </Attribute>
+    
+  <!--
+    affiliation aka eduPersonScopedAffiliation
+
+    Simplified affiliation values, with a scope.
+
+    For Stanford people, normal values are
+
+      faculty@stanford.edu
+      staff@stanford.edu
+      student@stanford.edu
+  -->
+  <Attribute
+    name="urn:mace:dir:attribute-def:eduPersonScopedAffiliation"
+    id="affiliation">
+    <AttributeDecoder
+      xsi:type="ScopedAttributeDecoder"
+      caseSensitive="false"/>
+  </Attribute>
+  <Attribute
+    name="urn:oid:1.3.6.1.4.1.5923.1.1.1.9"
+    id="affiliation">
+    <AttributeDecoder
+      xsi:type="ScopedAttributeDecoder"
+      caseSensitive="false"/>
+  </Attribute>
+    
+  <!--
+    unscoped-affiliation aka eduPersonAffiliation
+
+    Simplified affilation values, but without the scope
+
+    For Stanford people, normal values are
+
+      faculty
+      staff
+      student
+  -->
+  <Attribute
+    name="urn:mace:dir:attribute-def:eduPersonAffiliation"
+    id="unscoped-affiliation">
+    <AttributeDecoder
+      xsi:type="StringAttributeDecoder"
+      caseSensitive="false"/>
+  </Attribute>
+  <Attribute
+    name="urn:oid:1.3.6.1.4.1.5923.1.1.1.1"
+    id="unscoped-affiliation">
+    <AttributeDecoder
+      xsi:type="StringAttributeDecoder"
+      caseSensitive="false"/>
+  </Attribute>
+    
+  <!--
+    entitlement aka eduPersonEntitlement
+
+    Arbitrary strings representing entitlements
+
+    For Stanford people these are normally workgroup memberships
+
+      organization:businessaffairs
+      deptfw-docs:itlab
+  -->
+  <Attribute
+    name="urn:mace:dir:attribute-def:eduPersonEntitlement"
+    id="entitlement"/>
+  <Attribute
+    name="urn:oid:1.3.6.1.4.1.5923.1.1.1.7"
+    id="entitlement"/>
+
+  <!--
+    uid (SUNetID)
+
+    Normally uid would be mapped to uid, which is then mapped to
+    REMOTE_USER by the ApplicationDefaults settings in shibboleth2.xml.
+  -->
+  <Attribute
+    name="urn:mace:dir:attribute-def:uid"
+    id="uid"/>
+  <Attribute
+    name="urn:oid:0.9.2342.19200300.100.1.1"
+    id="uid"/>
+
+  <!--
+    uid (SUNetID)
+
+    If you have an existing app that uses WEBAUTH_USER rather than
+    REMOTE_USER use this mapping instead to create a WEBAUTH_USER
+    environment variable. Ensure that the REMOTE_USER attribute on the
+    ApplicationDefaults element in shibboleth2.xml includes WEBAUTH_USER:
+    
+      <ApplicationDefaults
+        ...
+        REMOTE_USER="uid WEBAUTH_USER">
+  -->
+  <!--
+  <Attribute
+    name="urn:mace:dir:attribute-def:uid"
+    id="WEBAUTH_USER"/>
+  <Attribute
+    name="urn:oid:0.9.2342.19200300.100.1.1"
+    id="WEBAUTH_USER"/>
+  -->
+
+  <!-- other commonly used attributes -->
+
+  <!--
+    displayName - person's preferred formatting of their name
+  -->
+  <Attribute
+    name="urn:mace:dir:attribute-def:displayName"
+    id="displayName"/>
+  <Attribute
+    name="urn:oid:2.16.840.1.113730.3.1.241"
+    id="displayName"/>
+
+  <!--
+    mail - person's email address
+    
+    NOTE: Stanford people can change their email address at any time,
+    so applications should not use the mail attribute as a persistent
+    identifier for users.
+  -->
+  <Attribute
+    name="urn:mace:dir:attribute-def:mail"
+    id="mail"/>
+  <Attribute
+    name="urn:oid:0.9.2342.19200300.100.1.3"
+    id="mail"/>
+
+  <!--
+    telephoneNumber - person's preferred phone number
+  -->
+  <Attribute
+    name="urn:mace:dir:attribute-def:telephoneNumber"
+    id="telephoneNumber"/>
+  <Attribute
+    name="urn:oid:2.5.4.20"
+    id="telephoneNumber"/>
+
+  <!--
+    suAffiliation - person's full "Stanford" affiliation(s)
+    
+    This attribute may be multi-valued; for example:
+    
+      stanford:staff
+      stanford:student:nonactive
+
+  -->
+  <Attribute
+    name="urn:mace:stanford.edu:directory:suPerson:suAffiliation"
+    id="suAffiliation"/>
+
+    <!-- SAML 2.0 Persistent NameIDs -->
+    <Attribute name="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" id="persistent-id">
+        <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
+    </Attribute>
+
+    <!-- SAML 2.0 Transient NameIDs -->
+    <Attribute name="urn:oasis:names:tc:SAML:2.0:nameid-format:transient" id="transient-id">
+        <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
+    </Attribute>
+
+
+
+</Attributes>

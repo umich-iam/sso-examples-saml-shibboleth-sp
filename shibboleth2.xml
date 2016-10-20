@@ -1,0 +1,135 @@
+<SPConfig
+  xmlns="urn:mace:shibboleth:2.0:native:sp:config"
+  xmlns:conf="urn:mace:shibboleth:2.0:native:sp:config"
+  xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+  xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
+  xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+  clockSkew="180">
+
+  <ApplicationDefaults
+    entityID="https://webapp.itlab.stanford.edu/"
+    REMOTE_USER="uid eppn">
+
+    <Sessions
+      lifetime="28800"
+      timeout="3600"
+      relayState="ss:mem"
+      checkAddress="false"
+      handlerSSL="true"
+      cookieProps="; path=/; secure; HttpOnly">
+
+      <!-- production IdP -->
+      <!--
+      <SSO entityID="https://idp.stanford.edu/">SAML2</SSO>
+      -->
+
+      <!-- UAT IdP -->
+      <!--
+      <SSO entityID="https://idp-uat.stanford.edu/">SAML2</SSO>
+      -->
+
+      <!-- development IdP -->
+      <!--
+      <SSO entityID="https://idp-dev.stanford.edu/">SAML2</SSO>
+      -->
+
+      <!-- IT Lab IdP v2 -->
+      <!--
+      <SSO entityID="https://idp.itlab.stanford.edu/idp/shibboleth">SAML2</SSO>
+      -->
+
+      <!-- IT Lab IdP v3 -->
+      <!--
+      <SSO entityID="https://weblogin.itlab.stanford.edu/idp/shibboleth">SAML2</SSO>
+      -->
+
+      <Logout>Local</Logout>
+
+      <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
+
+      <Handler type="Status" Location="/Status" acl="127.0.0.1 ::1"/>
+
+      <Handler type="Session" Location="/Session" showAttributeValues="false"/>
+
+    </Sessions>
+
+    <Errors
+      supportContact="admin@itlab.stanford.edu"
+      helpLocation="/about.html"
+      styleSheet="/shibboleth-sp/main.css"/>
+
+    <!-- production IdP -->
+    <!--
+    <MetadataProvider
+      type="XML"
+      uri="https://idp.stanford.edu/metadata.xml"
+      backingFilePath="/var/cache/shibboleth/idp-metata.xml"
+      reloadInterval="7200" />
+    -->
+
+    <!-- UAT IdP -->
+    <!--
+    <MetadataProvider
+      type="XML"
+      uri="https://idp-uat.stanford.edu/metadata.xml"
+      backingFilePath="/var/cache/shibboleth/idp-uat-metadata.xml"
+      reloadInterval="7200" />
+    -->
+
+    <!-- development IdP -->
+    <!--
+    <MetadataProvider
+      type="XML"
+      uri="https://idp-dev.stanford.edu/metadata.xml"
+      backingFilePath="/var/cache/shibboleth/idp-dev-metadata.xml"
+      reloadInterval="7200" />
+    -->
+
+    <!-- IT Lab IdP v2 -->
+    <!--
+    <MetadataProvider
+      type="XML"
+      uri="https://idp.itlab.stanford.edu/idp/profile/Metadata/SAML"
+      backingFilePath="/var/cache/shibboleth/itlab-metata.xml"
+      reloadInterval="7200" />
+    -->
+
+    <!-- IT Lab IdP v3 -->
+    <!--
+    <MetadataProvider
+      type="XML"
+      uri="https://weblogin.itlab.stanford.edu/weblogin-metadata.xml"
+      backingFilePath="/var/cache/shibboleth/weblogin-metata.xml"
+      reloadInterval="7200" />
+    -->
+
+    <AttributeExtractor
+       type="XML"
+       validate="true"
+       reloadChanges="false"
+       path="attribute-map.xml"/>
+
+    <AttributeFilter
+       type="XML"
+       validate="true"
+       path="attribute-policy.xml"/>
+
+    <CredentialResolver
+       type="File"
+       key="sp-key.pem"
+       certificate="sp-cert.pem"/>
+
+  </ApplicationDefaults>
+
+  <SecurityPolicyProvider
+     type="XML"
+     validate="true"
+     path="security-policy.xml"/>
+
+  <ProtocolProvider
+     type="XML"
+     validate="true"
+     reloadChanges="false"
+     path="protocols.xml"/>
+
+</SPConfig>
