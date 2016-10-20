@@ -7,7 +7,7 @@
   clockSkew="180">
 
   <ApplicationDefaults
-    entityID="https://webapp.itlab.stanford.edu/"
+    entityID="https://CHANGEME.stanford.edu/"
     REMOTE_USER="uid eppn">
 
     <Sessions
@@ -28,21 +28,6 @@
       <SSO entityID="https://idp-uat.stanford.edu/">SAML2</SSO>
       -->
 
-      <!-- development IdP -->
-      <!--
-      <SSO entityID="https://idp-dev.stanford.edu/">SAML2</SSO>
-      -->
-
-      <!-- IT Lab IdP v2 -->
-      <!--
-      <SSO entityID="https://idp.itlab.stanford.edu/idp/shibboleth">SAML2</SSO>
-      -->
-
-      <!-- IT Lab IdP v3 -->
-      <!--
-      <SSO entityID="https://weblogin.itlab.stanford.edu/idp/shibboleth">SAML2</SSO>
-      -->
-
       <Logout>Local</Logout>
 
       <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
@@ -54,7 +39,7 @@
     </Sessions>
 
     <Errors
-      supportContact="admin@itlab.stanford.edu"
+      supportContact="admin@CHANGEME.stanford.edu"
       helpLocation="/about.html"
       styleSheet="/shibboleth-sp/main.css"/>
 
@@ -73,33 +58,6 @@
       type="XML"
       uri="https://idp-uat.stanford.edu/metadata.xml"
       backingFilePath="/var/cache/shibboleth/idp-uat-metadata.xml"
-      reloadInterval="7200" />
-    -->
-
-    <!-- development IdP -->
-    <!--
-    <MetadataProvider
-      type="XML"
-      uri="https://idp-dev.stanford.edu/metadata.xml"
-      backingFilePath="/var/cache/shibboleth/idp-dev-metadata.xml"
-      reloadInterval="7200" />
-    -->
-
-    <!-- IT Lab IdP v2 -->
-    <!--
-    <MetadataProvider
-      type="XML"
-      uri="https://idp.itlab.stanford.edu/idp/profile/Metadata/SAML"
-      backingFilePath="/var/cache/shibboleth/itlab-metata.xml"
-      reloadInterval="7200" />
-    -->
-
-    <!-- IT Lab IdP v3 -->
-    <!--
-    <MetadataProvider
-      type="XML"
-      uri="https://weblogin.itlab.stanford.edu/weblogin-metadata.xml"
-      backingFilePath="/var/cache/shibboleth/weblogin-metata.xml"
       reloadInterval="7200" />
     -->
 

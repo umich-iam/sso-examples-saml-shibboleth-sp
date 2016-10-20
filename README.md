@@ -97,7 +97,7 @@ copy the key and certificate to each of the servers.  **DO NOT GENERATE A NEW KE
 
 ### Configure Access Controls
 
-Use the examples in `/etc/apache2/sites-available/webapp-ssl.conf` to
+Use the examples in [webapp-ssl.conf](webapp-ssl.conf) to
 define access controls for your site. You can also use `.htaccess`
 files in specific directories files if needed, but you'll have to allow
 AuthConfig overrides in the Apache configuration.
