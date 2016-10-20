@@ -7,11 +7,11 @@ at Stanford.
 
 There are a few basic steps required to configure an SP:
 
-1. [Set the Default EntityID](set-the-default-entityid)
-1. [Choose IdP](choose-idp)
-1. [Configure Error Handling](configure-error-handling)
-1. [Generate SP Key and Certificate](generate-sp-key-and-certificate)
-1. [Configure Access Controls](configure-access-controls)
+1. [Set the Default EntityID](#set-the-default-entityid)
+1. [Choose IdP](#choose-idp)
+1. [Configure Error Handling](#configure-error-handling)
+1. [Generate SP Key and Certificate](#generate-sp-key-and-certificate)
+1. [Configure Access Controls](#configure-access-controls)
 
 ### Set the Default EntityID
 
