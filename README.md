@@ -1,7 +1,7 @@
-# Sample Stanford Shibboleth SP Configuration
+# Sample U-M Shibboleth SP Configuration
 
 This repository contains example configuration files for Shibboleth SPs
-at Stanford.
+at U-M.
 
 ## Basic Configuration
 
@@ -16,27 +16,27 @@ There are a few basic steps required to configure an SP:
 ### Set the Default EntityID
 
 Set your default (or only) EntityID in `/etc/shibboleth/shibboleth2.xml`
-by replacing __webapp.itlab.stanford.edu__ in the `entityID` attribute
+by replacing __webapp.umich.edu__ in the `entityID` attribute
 on the `ApplicationDefaults` element with your hostname (or the
 loadbalanced name if you have multiple web servers for your application)
 
 ```xml
   <ApplicationDefaults
-    entityID="https://webapp.itlab.stanford.edu/"
+    entityID="https://webapp.umich.edu/"
     REMOTE_USER="uid eppn">
 ```
 
 ### Choose  IdP
 
 All the configurations contain a `shibboleth2.xml` file with all the
-Stanford IdPs commented out. You'll need to uncomment two definitions:
+U-M IdPs commented out. You'll need to uncomment two definitions:
 one __SSO__ element and one __MetadataProvider__ element. Make sure you
 uncomment matching definitions. E.g. to use the production IdP, you
 would uncomment
 
 ```xml
   <!-- production IdP -->
-  <SSO entityID="https://idp.stanford.edu/">SAML2</SSO>
+  <SSO entityID="https://shibboleth.umich.edu/">SAML2</SSO>
 ```
 
 and
@@ -45,7 +45,7 @@ and
   <!-- production IdP -->
   <MetadataProvider
     type="XML"
-    uri="https://idp.stanford.edu/metadata.xml"
+    uri="https://shibboleth.umich.edu/metadata.xml"
     backingFilePath="/var/cache/shibboleth/idp-metata.xml"
     reloadInterval="7200" />
 ```
@@ -56,8 +56,8 @@ Update the attributes on the `Error` element with appropriate values:
 
 ```xml
   <Errors
-    supportContact="YOUR-TEAM@lists.stanford.edu"
-    helpLocation="https://helpsu.stanford.edu/..."
+    supportContact="YOUR-TEAM@umich.edu"
+    helpLocation="https://helpsu.umich.edu/..."
     styleSheet="/shibboleth-sp/main.css"/>
 ```
 
@@ -109,12 +109,12 @@ retrieved from the Shibboleth Handler for each EntityID by combining
 the virtual host HTTPS URL, the value of the `handlerURL` attribute on
 the corresponding `ApplicationOverride` element in `shibboleth2.xml`,
 and appending "__/Metadata__". For example, for the default EntityID on
-__webapp.itlab.stanford.edu__, with the handler at __/Shibboleth.sso__ we would use:
+__webapp.itlab.umich.edu__, with the handler at __/Shibboleth.sso__ we would use:
 
 ```shell_session
-  % curl -so my-metadata.xml https://webapp.itlab.stanford.edu/Shibboleth.sso/Metadata
+  % curl -so my-metadata.xml https://webapp.umich.edu/Shibboleth.sso/Metadata
   % grep entityID my-metadata.xml
-  <md:EntityDescriptor ... entityID="https://webapp.itlab.stanford.edu/">
+  <md:EntityDescriptor ... entityID="https://webapp.umich.edu/">
 ```
 
 ### Metadata Cleanup
@@ -131,17 +131,17 @@ Before you submit your metadata, clean up the metadata:
     <!-- -->
     </md:SPSSODescriptor>
     <md:Organization>
-      <md:OrganizationName xml:lang="en">Stanford University</md:OrganizationName>
-      <md:OrganizationDisplayName xml:lang="en">Stanford University</md:OrganizationDisplayName>
-      <md:OrganizationURL xml:lang="en">http://www.stanford.edu/</md:OrganizationURL>
+      <md:OrganizationName xml:lang="en">University of Michigan</md:OrganizationName>
+      <md:OrganizationDisplayName xml:lang="en">University of Michigan</md:OrganizationDisplayName>
+      <md:OrganizationURL xml:lang="en">http://www.umich.edu/</md:OrganizationURL>
     </md:Organization>
     <md:ContactPerson contactType="administrative">
-      <md:GivenName>Jane Stanford</md:GivenName>
-      <md:EmailAddress>jane.stanford@stanford.edu</md:EmailAddress>
+      <md:GivenName>Babs Jensenf</md:GivenName>
+      <md:EmailAddress>bjensen@umich.edu</md:EmailAddress>
     </md:ContactPerson>
     <md:ContactPerson contactType="technical">
       <md:GivenName>Leland Stanford, Jr</md:GivenName>
-      <md:EmailAddress>leland.stanford.jr@stanford.edu</md:EmailAddress>
+      <md:EmailAddress>leland.umich.jr@umich.edu</md:EmailAddress>
     </md:ContactPerson>
   </md:EntityDescriptor>
 ```
@@ -149,11 +149,11 @@ Before you submit your metadata, clean up the metadata:
 ## Submit Metadata and Request Attributes
 
 Submit your cleaned up metadata via
-[HelpSU](https://helpsu.stanford.edu/helpsu/3.0/helpsu-form?pcat=shibboleth),
+[HelpSU](https://helpsu.umich.edu/helpsu/3.0/helpsu-form?pcat=shibboleth),
 then submit a
-[Data Owner Request](https://tools.stanford.edu/dataowner/dataowner-request)
+[Data Owner Request](https://tools.umich.edu/dataowner/dataowner-request)
 to get the attributes your application needs (if the
-[default](https://uit.stanford.edu/service/shibboleth/arp) attributes are not enough).
+[default](https://uit.umich.edu/service/shibboleth/arp) attributes are not enough).
 
 ## When to Restart Apache and Shibd
 
