@@ -1,7 +1,7 @@
 <Protocols xmlns="urn:mace:shibboleth:2.0:native:sp:protocols">
 
   <!--
-    This is a stripped down protocol configuration for Stanford
+    This is a stripped down protocol configuration for U-M
     Shibboleth SPs.
     
     It only supports the SAML 2.0 HTTP-POST binding for authentication,
