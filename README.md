@@ -45,7 +45,7 @@ and
   <!-- production IdP -->
   <MetadataProvider
     type="XML"
-    uri="https://shibboleth.umich.edu/metadata.xml"
+    uri="https://shibboleth.umich.edu/md/umich-prod-idps.xml"
     backingFilePath="/var/cache/shibboleth/idp-metata.xml"
     reloadInterval="7200" />
 ```
@@ -57,7 +57,7 @@ Update the attributes on the `Error` element with appropriate values:
 ```xml
   <Errors
     supportContact="YOUR-TEAM@umich.edu"
-    helpLocation="https://helpsu.umich.edu/..."
+    helpLocation="https://its.umich.edu/help"
     styleSheet="/shibboleth-sp/main.css"/>
 ```
 

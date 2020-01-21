@@ -3,18 +3,21 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <!--
-    This is a stripped down attribute-map for Stanford Shibboleth SPs.
+    This is a stripped down attribute-map for U-M Shibboleth SPs.
     Extra attribute mappings can be added for additional attributes.
 
     Some attributes have multiple mappings, because IdPs can release
     well-known attributes using either the OID or name.
+
+    U-M shibboleth documentation can be found at
+        https://its.umich.edu/accounts-access/shibboleth
   -->
     
   <!--
     eppn aka eduPersonPrincipalName
     
-    A username with a scope (domain); for Stanford people it is
-    SUNetID@stanford.edu
+    A username with a scope (domain); for U-M people it is
+    uniqname@umich.edu
   -->
   <Attribute
     name="urn:mace:dir:attribute-def:eduPersonPrincipalName"
@@ -34,11 +37,14 @@
 
     Simplified affiliation values, with a scope.
 
-    For Stanford people, normal values are
+    For U-M people, normal values are
 
-      faculty@stanford.edu
-      staff@stanford.edu
-      student@stanford.edu
+      faculty@umich.edu
+      staff@umich.edu
+      student@umich.edu
+
+    NOTE: supported scopes are annarbor.umich.edu, 
+    dearborn.umich.edu, flint.umich.edu and umich.edu
   -->
   <Attribute
     name="urn:mace:dir:attribute-def:eduPersonScopedAffiliation"
@@ -60,7 +66,7 @@
 
     Simplified affilation values, but without the scope
 
-    For Stanford people, normal values are
+    For U-M people, normal values are
 
       faculty
       staff
@@ -85,11 +91,6 @@
     entitlement aka eduPersonEntitlement
 
     Arbitrary strings representing entitlements
-
-    For Stanford people these are normally workgroup memberships
-
-      organization:businessaffairs
-      deptfw-docs:itlab
   -->
   <Attribute
     name="urn:mace:dir:attribute-def:eduPersonEntitlement"
@@ -99,10 +100,16 @@
     id="entitlement"/>
 
   <!--
-    uid (SUNetID)
+    uid (uniqname)
 
     Normally uid would be mapped to uid, which is then mapped to
     REMOTE_USER by the ApplicationDefaults settings in shibboleth2.xml.
+
+    NOTE: neither friend accounts nor shared accounts have uid values.
+    Consider using ePPN instead.
+
+    NOTE: uid is not unique across federated IdPs.
+    DO NOT USE WITH FEDERATED APPLICATIONS
   -->
   <Attribute
     name="urn:mace:dir:attribute-def:uid"
@@ -111,28 +118,27 @@
     name="urn:oid:0.9.2342.19200300.100.1.1"
     id="uid"/>
 
-  <!--
-    uid (SUNetID)
-
-    If you have an existing app that uses WEBAUTH_USER rather than
-    REMOTE_USER use this mapping instead to create a WEBAUTH_USER
-    environment variable. Ensure that the REMOTE_USER attribute on the
-    ApplicationDefaults element in shibboleth2.xml includes WEBAUTH_USER:
-    
-      <ApplicationDefaults
-        ...
-        REMOTE_USER="uid WEBAUTH_USER">
-  -->
-  <!--
-  <Attribute
-    name="urn:mace:dir:attribute-def:uid"
-    id="WEBAUTH_USER"/>
-  <Attribute
-    name="urn:oid:0.9.2342.19200300.100.1.1"
-    id="WEBAUTH_USER"/>
-  -->
 
   <!-- other commonly used attributes -->
+    <!--
+      givenName - person's given name
+    -->
+    <Attribute
+      name="urn:mace:dir:attribute-def:givenName"
+      id="givenName"/>
+    <Attribute
+      name="urn:oid:2.5.4.42"
+      id="givenName"/>
+
+    <!--
+      sn - person's surname
+    -->
+    <Attribute
+      name="urn:mace:dir:attribute-def:sn"
+      id="sn"/>
+    <Attribute
+      name="urn:oid:2.5.4.4"
+      id="sn"/>
 
   <!--
     displayName - person's preferred formatting of their name
@@ -147,7 +153,7 @@
   <!--
     mail - person's email address
     
-    NOTE: Stanford people can change their email address at any time,
+    NOTE: U-M people can change their email address at any time,
     so applications should not use the mail attribute as a persistent
     identifier for users.
   -->
@@ -158,32 +164,35 @@
     name="urn:oid:0.9.2342.19200300.100.1.3"
     id="mail"/>
 
-  <!--
-    telephoneNumber - person's preferred phone number
-  -->
-  <Attribute
-    name="urn:mace:dir:attribute-def:telephoneNumber"
-    id="telephoneNumber"/>
-  <Attribute
-    name="urn:oid:2.5.4.20"
-    id="telephoneNumber"/>
+    <!--
+      member - group membership information
+    -->
+    <Attribute
+      name="urn:oid:1.3.6.1.4.1.5923.1.5.1.1"
+      id="member"/>
 
-  <!--
-    suAffiliation - person's full "Stanford" affiliation(s)
-    
-    This attribute may be multi-valued; for example:
-    
-      stanford:staff
-      stanford:student:nonactive
 
-  -->
-  <Attribute
-    name="urn:mace:stanford.edu:directory:suPerson:suAffiliation"
-    id="suAffiliation"/>
+    <!--
+      umichPrincipalName - the un-modified username as presented by the IDP.
+      Probably the easiest way to capture the username for uniqnames, friend 
+      accounts and shared accounts.
 
-    <!-- SAML 2.0 Persistent NameIDs -->
-    <Attribute name="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" id="persistent-id">
-        <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
+      NOTE: SPECIFIC TO U-M.  DO NOT USE WITH FEDERATED APPLICATIONS
+    -->
+    <Attribute
+      name="umichPrincipalName"
+      id="umichPrincipalName"/>
+    <Attribute
+      name="http://its.umich.edu/shibboleth/attributes/umichPrincipalName"
+      id="umichPrincipalName"/>
+
+    <!-- New standard identifier attributes for SAML. -->
+    <Attribute name="urn:oasis:names:tc:SAML:attribute:subject-id" id="subject-id">
+        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
+    </Attribute>
+
+    <Attribute name="urn:oasis:names:tc:SAML:attribute:pairwise-id" id="pairwise-id">
+        <AttributeDecoder xsi:type="ScopedAttributeDecoder" caseSensitive="false"/>
     </Attribute>
 
     <!-- SAML 2.0 Transient NameIDs -->
@@ -191,6 +200,18 @@
         <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
     </Attribute>
 
+    <!--
+    Legacy pairwise identifier attribute / NameID format, intended to be replaced by the
+    simpler pairwise-id attribute (see top of file).
+    -->
+    <!-- The eduPerson attribute version (note the OID-style name): -->
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" id="persistent-id">
+        <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
+    </Attribute>
 
+    <!-- The SAML 2.0 NameID Format: -->
+    <Attribute name="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" id="persistent-id">
+        <AttributeDecoder xsi:type="NameIDAttributeDecoder" formatter="$NameQualifier!$SPNameQualifier!$Name" defaultQualifiers="true"/>
+    </Attribute>
 
 </Attributes>

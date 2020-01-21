@@ -1,14 +1,12 @@
 <SPConfig
-  xmlns="urn:mace:shibboleth:2.0:native:sp:config"
-  xmlns:conf="urn:mace:shibboleth:2.0:native:sp:config"
-  xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
-  xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
-  xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+  xmlns="urn:mace:shibboleth:3.0:native:sp:config"
+  xmlns:conf="urn:mace:shibboleth:3.0:native:sp:config"
   clockSkew="180">
 
   <ApplicationDefaults
-    entityID="https://CHANGEME.stanford.edu/"
-    REMOTE_USER="uid eppn">
+    entityID="https://CHANGEME.umich.edu/"
+    REMOTE_USER="eppn uid umichPrincipalName"
+    cipherSuites="DEFAULT:!EXP:!LOW:!aNULL:!eNULL:!DES:!IDEA:!SEED:!RC4:!3DES:!kRSA:!SSLv2:!SSLv3:!TLSv1:!TLSv1.1">>
 
     <Sessions
       lifetime="28800"
@@ -16,16 +14,16 @@
       relayState="ss:mem"
       checkAddress="false"
       handlerSSL="true"
-      cookieProps="; path=/; secure; HttpOnly">
+      cookieProps="https">
 
       <!-- production IdP -->
       <!--
-      <SSO entityID="https://idp.stanford.edu/">SAML2</SSO>
+      <SSO entityID="https://shibboleth.umich.edu/idp/shibboleth">SAML2</SSO>
       -->
 
       <!-- UAT IdP -->
       <!--
-      <SSO entityID="https://idp-uat.stanford.edu/">SAML2</SSO>
+      <SSO entityID="https://shib-sp-test.www.umich.edu/idp/shibboleth">SAML2</SSO>
       -->
 
       <Logout>Local</Logout>
@@ -39,7 +37,7 @@
     </Sessions>
 
     <Errors
-      supportContact="admin@CHANGEME.stanford.edu"
+      supportContact="admin@CHANGEME.umich.edu"
       helpLocation="/about.html"
       styleSheet="/shibboleth-sp/main.css"/>
 
@@ -47,18 +45,26 @@
     <!--
     <MetadataProvider
       type="XML"
-      uri="https://idp.stanford.edu/metadata.xml"
-      backingFilePath="/var/cache/shibboleth/idp-metata.xml"
-      reloadInterval="7200" />
+      uri="https://shibboleth.umich.edu/md/umich-prod-idps.xml"
+      backingFilePath="/var/cache/shibboleth/umich-prod-idps.xml"
+      reloadInterval="7200">
+      <MetadataFilter
+        type="Signature"
+        certificate="umich-md-sign.pem"/>
+    </MetadataProvider>
     -->
 
     <!-- UAT IdP -->
     <!--
     <MetadataProvider
       type="XML"
-      uri="https://idp-uat.stanford.edu/metadata.xml"
-      backingFilePath="/var/cache/shibboleth/idp-uat-metadata.xml"
-      reloadInterval="7200" />
+      uri="https://shibboleth.umich.edu/md/umich-nonprod-idps.xml"
+      backingFilePath="/var/cache/shibboleth/umich-nonprod-idps.xml"
+      reloadInterval="7200">
+      <MetadataFilter
+        type="Signature"
+        certificate="umich-md-sign.pem"/>
+    </MetadataProvider>
     -->
 
     <AttributeExtractor
@@ -74,8 +80,15 @@
 
     <CredentialResolver
        type="File"
-       key="sp-key.pem"
-       certificate="sp-cert.pem"/>
+       use="signing"
+       key="sp-signing-key.pem"
+       certificate="sp-signing-cert.pem"/>
+
+    <CredentialResolver
+       type="File"
+       use="encryption"
+       key="sp-encrypt-key.pem"
+       certificate="sp-encrypt-cert.pem"/>
 
   </ApplicationDefaults>
 
