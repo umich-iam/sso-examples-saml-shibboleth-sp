@@ -136,24 +136,24 @@ Before you submit your metadata, clean up the metadata:
       <md:OrganizationURL xml:lang="en">http://www.umich.edu/</md:OrganizationURL>
     </md:Organization>
     <md:ContactPerson contactType="administrative">
-      <md:GivenName>Babs Jensenf</md:GivenName>
+      <md:GivenName>Babs Jensen</md:GivenName>
       <md:EmailAddress>bjensen@umich.edu</md:EmailAddress>
     </md:ContactPerson>
     <md:ContactPerson contactType="technical">
-      <md:GivenName>Leland Stanford, Jr</md:GivenName>
-      <md:EmailAddress>leland.umich.jr@umich.edu</md:EmailAddress>
+      <md:GivenName>Joe User</md:GivenName>
+      <md:EmailAddress>joeuser@umich.edu</md:EmailAddress>
     </md:ContactPerson>
   </md:EntityDescriptor>
 ```
 
 ## Submit Metadata and Request Attributes
 
-Submit your cleaned up metadata via
-[HelpSU](https://helpsu.umich.edu/helpsu/3.0/helpsu-form?pcat=shibboleth),
-then submit a
-[Data Owner Request](https://tools.umich.edu/dataowner/dataowner-request)
+Submit your cleaned up metadata via the
+[Shibboleth Configuration Request Form](https://its.umich.edu/accounts-access/shibboleth/configuration-request-form),
+then submit the
+[Shibboleth Attribute Release Request Form](https://its.umich.edu/accounts-access/shibboleth/attribute-release-request-form)
 to get the attributes your application needs (if the
-[default](https://uit.umich.edu/service/shibboleth/arp) attributes are not enough).
+[default](https://documentation.its.umich.edu/node/262/#autoincommon) attributes are not enough).
 
 ## When to Restart Apache and Shibd
 
