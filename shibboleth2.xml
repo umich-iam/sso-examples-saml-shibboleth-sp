@@ -5,7 +5,7 @@
 
   <ApplicationDefaults
     entityID="https://CHANGEME.umich.edu/"
-    REMOTE_USER="eppn uid umichPrincipalName"
+    REMOTE_USER="umichPrincipalName uid eppn"
     cipherSuites="DEFAULT:!EXP:!LOW:!aNULL:!eNULL:!DES:!IDEA:!SEED:!RC4:!3DES:!kRSA:!SSLv2:!SSLv3:!TLSv1:!TLSv1.1">>
 
     <Sessions
