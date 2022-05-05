@@ -23,7 +23,7 @@
 
       <!-- UAT IdP -->
       <!--
-      <SSO entityID="https://shib-sp-test.www.umich.edu/idp/shibboleth">SAML2</SSO>
+      <SSO entityID="https://shib-idp-staging.dsc.umich.edu/idp/shibboleth">SAML2</SSO>
       -->
 
       <Logout>Local</Logout>
