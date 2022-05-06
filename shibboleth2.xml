@@ -45,7 +45,7 @@
     <!--
     <MetadataProvider
       type="XML"
-      uri="https://shibboleth.umich.edu/md/umich-prod-idps.xml"
+      url="https://shibboleth.umich.edu/md/umich-prod-idps.xml"
       backingFilePath="/var/cache/shibboleth/umich-prod-idps.xml"
       reloadInterval="7200">
       <MetadataFilter
@@ -58,7 +58,7 @@
     <!--
     <MetadataProvider
       type="XML"
-      uri="https://shibboleth.umich.edu/md/umich-nonprod-idps.xml"
+      url="https://shibboleth.umich.edu/md/umich-nonprod-idps.xml"
       backingFilePath="/var/cache/shibboleth/umich-nonprod-idps.xml"
       reloadInterval="7200">
       <MetadataFilter
