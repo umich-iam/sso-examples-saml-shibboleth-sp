@@ -45,7 +45,7 @@ and
   <!-- production IdP -->
   <MetadataProvider
     type="XML"
-    uri="https://shibboleth.umich.edu/md/umich-prod-idps.xml"
+    url="https://shibboleth.umich.edu/md/umich-prod-idps.xml"
     backingFilePath="/var/cache/shibboleth/idp-metata.xml"
     reloadInterval="7200" />
 ```
